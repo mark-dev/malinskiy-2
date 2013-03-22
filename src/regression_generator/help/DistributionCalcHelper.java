@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -71,12 +72,13 @@ public class DistributionCalcHelper {
         return max;
     }
     public static void saveToFile(double[] array, File f) {
-        if(!f.exists()){
-            try {
-                f.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
+        if(f.exists()){
+            f.delete();
+        }
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         try {
             PrintWriter pw = new PrintWriter(f);
@@ -85,7 +87,35 @@ public class DistributionCalcHelper {
             }
             pw.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
+    }
+    //Заполняет (пустые) массивы с мат ожиданием и отклонением, на основании
+    //списка массивов на которые был разбит исходный массив
+    public  static void fillMxAndSigmaArrays(ArrayList<double[]> splitted,double[] mxArray,double[] sigmaArray){
+        for(int i=0;i<splitted.size();i++){
+            //Для каждой из частей массива
+            // расчитываем мат ожидание
+            // и среднее отклонение
+            double[] partArray = splitted.get(i);
+            mxArray[i] = DistributionCalcHelper.calcMx(partArray);
+            sigmaArray[i] = DistributionCalcHelper.calcSigma(partArray);
+        }
+    }
+    //Разбивает массив original на части размером parts
+    public  static ArrayList<double[]> splitByParts(double[] original,int parts){
+        if(original.length % parts !=0){
+            throw new IllegalArgumentException("невозможно разделить массив на равные части(не делится нацело)");
+        }
+        ArrayList<double[]> result = new ArrayList<double[]>();
+        for(int i=0;i<original.length;i = i + parts){
+            //Копируем в tempArray начиная с позиции 0
+            //массив original начиная с индекса i
+            //длинной parts
+            double[] tempArray = new double[parts];
+            System.arraycopy(original, i, tempArray, 0, parts);
+            result.add(tempArray);
+        }
+        return result;
     }
 }
