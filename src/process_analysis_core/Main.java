@@ -19,7 +19,6 @@ import java.util.ArrayList;
  */
 public class Main {
     public static void main(String[] args) {
-        int N = 70;    //N
         int processArrayLength = 5000; //N1
         int parts = 100; //  N2
         double alpha1 = 0.9;
@@ -77,6 +76,7 @@ public class Main {
         printEstimates("MX",mxArray);
         printEstimates("Sigma",sigmaArray);
     }
+    //Печатает оценки методом серий и инверсий
     private static void printEstimates(String header,double[] array){
         AnalysisInversionMethod inversion  = new AnalysisInversionMethod();
         AnalysisSeriesMethod  series = new AnalysisSeriesMethod();
@@ -84,6 +84,7 @@ public class Main {
                 + inversion.calcEstimate(array)
                 + "\n\tSeries: "+series.calcEstimate(array));
     }
+    //Удаляет тренд из массива
     private static double[] calcFixedArray(double[] experementalData) {
         ParabolicApproximation parabola = new ParabolicApproximation(experementalData);
         double[] fixed = new double[experementalData.length];
