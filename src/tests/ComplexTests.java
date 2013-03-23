@@ -7,6 +7,8 @@ import org.junit.Test;
 import regression_generator.help.DistributionCalcHelper;
 import regression_generator.help.NormalDistribution;
 
+import java.util.Arrays;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Mark
@@ -33,7 +35,9 @@ public class ComplexTests {
         int genLength = 1000;
         int tryCount = 1000;
         for(int i=0;i<tryCount;i++){
-            Assert.assertEquals(sum(DistributionCalcHelper.calcHistogram(nd.generateArray(genLength),5)),genLength);
+            double[] arr = nd.generateArray(genLength);
+            int[] hist1 = DistributionCalcHelper.calcHistogram(arr, 5);
+            Assert.assertEquals(sum(hist1),genLength);
         }
     }
     //Сумирует массив целых чисел

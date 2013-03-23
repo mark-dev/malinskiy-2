@@ -35,20 +35,23 @@ public class DistributionCalcHelper {
         double max = max(array);
         double step = (max - min) / parts;
         int[] histValues = new int[parts];
-        for (int i = 0; i < histValues.length; i++) {
-            int count = 0;   //Колво попаданий в текущий промежуток
-            double right = min + step*(i+1);
-            double left = min + step*(i);
-            for (double anArray : array) {
-                if (right > anArray && anArray > left) {
-                    count++;
-                } else if (i == 0 && anArray == min) {
-                    count++;
-                } else if (i == histValues.length - 1 && anArray == max) {
-                    count++;
+        for (double anArray : array) {
+            for(int i=0;i<histValues.length;i++){
+                double right = min + step*(i+1);
+                double left = min + step*i;
+                if(right > anArray && anArray > left){
+                    histValues[i] = histValues[i] + 1;
+                    break;
+                }
+                else if(anArray == min){
+                    histValues[0] = histValues[0] + 1;
+                    break;
+                }
+                else if(anArray == max){
+                    histValues[histValues.length-1] = histValues[histValues.length-1]+1;
+                    break;
                 }
             }
-            histValues[i] = count;
         }
         return histValues;
     }
