@@ -1,0 +1,3 @@
+[submodule "src/oed"]
+	path = src/oed
+	url = https://github.com/mark-dev/oed-core.git
