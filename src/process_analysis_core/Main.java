@@ -1,11 +1,12 @@
 package process_analysis_core;
 
-import analyze.impl.AnalysisInversionMethod;
-import analyze.impl.AnalysisSeriesMethod;
-import interfaces.IArrayGenerator;
 import least_squares.ParabolicApproximation;
-import regression_generator.help.DistributionCalcHelper;
-import regression_generator.impl.RegressionArrayGeneratorModel2;
+import oed.analyze.impl.AnalysisInversionMethod;
+import oed.analyze.impl.AnalysisSeriesMethod;
+import oed.interfaces.IArrayGenerator;
+import oed.regression_generator.help.DistributionCalcHelper;
+import oed.regression_generator.impl.RegressionArrayGeneratorModel2;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public class Main {
     //Печатает оценки методом серий и инверсий
     private static void printEstimates(String header,double[] array){
         AnalysisInversionMethod inversion  = new AnalysisInversionMethod();
-        AnalysisSeriesMethod  series = new AnalysisSeriesMethod();
+        AnalysisSeriesMethod series = new AnalysisSeriesMethod();
         System.out.println(header+"\n\tInversion: "
                 + inversion.calcEstimate(array)
                 + "\n\tSeries: "+series.calcEstimate(array));
